@@ -3,10 +3,10 @@ services:
   - docker
 
 before_install:
-  - echo 'DOCKER_OPTS="$DOCKER_OPTS --registry-mirror=https://mirror.gcr.io"'
   - docker build -t williampring/docker-react -f Dockerfile.dev .
 
 scripts:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker run -e CI=true williampring/docker-react npm run test -- --coverage
 
 deploy:
